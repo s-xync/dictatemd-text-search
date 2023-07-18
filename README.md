@@ -5,10 +5,10 @@
 - You can `npm i` and `npm start`
 - You can visit `http://localhost:3001/api-docs` to view the swagger documentation
 - The backend on initial search fetches from db and then caches it on redis. If a new document is added, it will clear the caches.
-- Recording: https://drive.google.com/file/d/1stqdLek4vup7QkwshVBKIIiMHfMzKfOJ/view?usp=sharing
+- Recording: https://drive.google.com/file/d/1stqdLek4vup7QkwshVBKIIiMHfMzKfOJ/view?usp=sharing (if you are unable to view the video in online player, you can download and view it)
 
 ### Frontend
 - You just need to do `npm i` and `npm run dev`
 - You can visit `http://localhost:3000` to see list of posts and do search. You have the button to add new blog which will take you to that screen.
-- Recording: https://drive.google.com/file/d/1Gc1s_yKx0mQC_mbeOdSXIxtAZxxm5X9q/view?usp=sharing
+- Recording: https://drive.google.com/file/d/1Gc1s_yKx0mQC_mbeOdSXIxtAZxxm5X9q/view?usp=sharing (if you are unable to view the video in online player, you can download and view it)
   
