@@ -24,7 +24,7 @@
   margin-right: 0.5rem;
 }
 
-.searchForm button {
+.button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: #0070f3;
@@ -62,4 +62,8 @@
 .blogItem span {
   color: #666;
   font-size: 0.875rem;
+}
+
+.highlighted {
+  background-color: yellow;
 }

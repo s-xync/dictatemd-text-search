@@ -1,28 +1,44 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import styles from "./HomeScreen.module.css";
+import { useRouter } from "next/router";
 
 const HomeScreen = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTermInput, setSearchTermInput] = useState("");
   const [blogPosts, setBlogPosts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
-    handleSearch();
-  }, []);
+    handleSearch(searchTerm);
+  }, [searchTerm]);
 
-  const handleSearch = async (e?) => {
-    if (e) {
-      e.preventDefault();
-    }
-
+  const handleSearch = async (keywords) => {
     const res = await fetch(
       "http://localhost:3001/blogposts" +
-        (searchTerm ? `/search?keywords=${searchTerm}` : "")
+        (searchTermInput ? `/search?keywords=${keywords}` : "")
     );
 
     const blogPosts = await res.json();
     setBlogPosts(blogPosts);
+  };
+
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+
+    setSearchTerm(searchTermInput);
+  };
+
+  const highlightKeywords = (text) => {
+    const keywords = searchTerm.split(" ");
+    return keywords.reduce((result, keyword) => {
+      const regex = new RegExp(keyword, "gi");
+      return result.replace(
+        regex,
+        `<span class="${styles.highlighted}">${keyword}</span>`
+      );
+    }, text);
   };
 
   return (
@@ -34,14 +50,27 @@ const HomeScreen = () => {
 
       <header className={styles.header}>
         <h1>Blog Posts</h1>
-        <form className={styles.searchForm} onSubmit={handleSearch}>
+        <button
+          className={styles.button}
+          type="button"
+          onClick={() => {
+            router.push("/add-blog");
+          }}
+        >
+          Add new blog
+        </button>
+        <br />
+        <br />
+        <form className={styles.searchForm} onSubmit={handleSearchSubmit}>
           <input
             type="text"
             placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTermInput}
+            onChange={(e) => setSearchTermInput(e.target.value)}
           />
-          <button type="submit">Search</button>
+          <button className={styles.button} type="submit">
+            Search
+          </button>
         </form>
       </header>
 
@@ -50,9 +79,24 @@ const HomeScreen = () => {
           {blogPosts.map((post) => (
             <li key={post._id} className={styles.blogItem}>
               <div>
-                <h2>{post.title}</h2>
-                <p>{post.text}</p>
-                <span>Author: {post.author}</span>
+                <h2
+                  dangerouslySetInnerHTML={{
+                    __html: highlightKeywords(post.title),
+                  }}
+                />
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: highlightKeywords(post.text),
+                  }}
+                />
+                <span>
+                  Author:{" "}
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: highlightKeywords(post.author),
+                    }}
+                  />
+                </span>
                 <br />
                 <span>Date: {post.date}</span>
               </div>
