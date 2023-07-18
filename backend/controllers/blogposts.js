@@ -18,7 +18,7 @@ const getAllBlogPosts = async (req, res) => {
     if (cachedData) {
       res.json(JSON.parse(cachedData));
     } else {
-      const blogPosts = await BlogPost.find();
+      const blogPosts = await BlogPost.find().sort({ date: -1 });
       redisClient.set(cacheKey, JSON.stringify(blogPosts), "EX", 3600);
       res.json(blogPosts);
     }
@@ -69,8 +69,9 @@ const searchBlogPosts = async (req, res) => {
         $or: [
           { title: { $in: searchKeywords } },
           { text: { $in: searchKeywords } },
+          { author: { $in: searchKeywords } },
         ],
-      });
+      }).sort({ date: -1 });
 
       redisClient.set(cacheKey, JSON.stringify(blogPosts), "EX", 3600);
       res.json(blogPosts);
