@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AddBlogPostFormScreen.css";
+import styles from "./AddBlogPostFormScreen.module.css";
 import { useRouter } from "next/router";
 
 const AddBlogPostForm = () => {
@@ -31,10 +31,13 @@ const AddBlogPostForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="add-blog-post-form">
-      <div className="form-group">
-        <label htmlFor="title">Title:</label>
+    <form onSubmit={handleSubmit} className={styles.addBlogPostForm}>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="title">
+          Title:
+        </label>
         <input
+          className={styles.input}
           type="text"
           id="title"
           value={title}
@@ -42,18 +45,24 @@ const AddBlogPostForm = () => {
           required
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="text">Text:</label>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="text">
+          Text:
+        </label>
         <textarea
+          className={styles.textarea}
           id="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           required
         ></textarea>
       </div>
-      <div className="form-group">
-        <label htmlFor="author">Author:</label>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="author">
+          Author:
+        </label>
         <input
+          className={styles.input}
           type="text"
           id="author"
           value={author}
@@ -61,7 +70,7 @@ const AddBlogPostForm = () => {
           required
         />
       </div>
-      <button type="submit" className="submit-btn">
+      <button type="submit" className={styles.submitBtn}>
         Submit
       </button>
     </form>
