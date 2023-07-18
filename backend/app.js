@@ -17,8 +17,8 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
-var indexRouter = require("./routes/index");
 var blogPostsRouter = require("./routes/blogposts");
+var swaggerRouter = require("./swagger");
 
 var app = express();
 
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.use("/", swaggerRouter);
 app.use("/blogposts", blogPostsRouter);
 
 // catch 404 and forward to error handler
