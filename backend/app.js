@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 mongoose.connect("mongodb://localhost/dictatemd", {
   useNewUrlParser: true,
@@ -21,6 +22,8 @@ var blogPostsRouter = require("./routes/blogposts");
 var swaggerRouter = require("./swagger");
 
 var app = express();
+
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
